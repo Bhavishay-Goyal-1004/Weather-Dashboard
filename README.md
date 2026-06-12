@@ -132,7 +132,29 @@ history
 ```
 
 to view previously searched cities.
+```bash
+===== SEARCH HISTORY =====
 
+City: Mumbai
+Temperature: 304.51°C
+Condition: few clouds
+
+City: Dhanbad
+Temperature: 312.04°C
+Condition: scattered clouds
+
+City: Delhi
+Temperature: 310.56°C
+Condition: broken clouds
+
+City: Chennai
+Temperature: 35.56°C
+Condition: overcast clouds
+
+City: Pune
+Temperature: 35.78°C
+Condition: scattered clouds
+```
 ---
 
 # Error Handling
