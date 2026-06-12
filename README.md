@@ -99,7 +99,7 @@ python main.py
 ## Weather Search
 
 ```bash
-Enter city name (or type 'history'): Mumbai
+Enter city name (or type 'history'): Pune
 ```
 
 ## Example Output
