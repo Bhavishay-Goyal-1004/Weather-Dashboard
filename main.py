@@ -60,12 +60,20 @@ def show_history():
         print("No search history found!")
         return
 
-    print("\n===== SEARCH HISTORY =====")
-
+    print("\n" + "╔" + "═" * 55 + "╗")
+    print(f"║{'SEARCH HISTORY':^55}║")
+    
     for item in history:
-        print(f"\nCity: {item['city']}")
-        print(f"Temperature: {item['weather']['temp']}°C")
-        print(f"Condition: {item['weather']['condition']}")
+        print("╠" + "═" * 55 + "╣")
+
+        print(f"║ {'City':<15}: {item['city']:<36} ║")
+        print(f"║ {'Temperature':<15}: {str(item['weather']['temperature']) + '°C':<36} ║")
+        print(f"║ {'Humidity':<15}: {str(item['weather']['humidity']) + '%':<36} ║")
+        print(f"║ {'Wind Speed':<15}: {str(round(item['weather']['wind_speed'],1)) + ' km/h':<36} ║")
+        print(f"║ {'AQI':<15}: {item['weather']['aqi']:<36} ║")
+        print(f"║ {'Condition':<15}: {item['weather']['condition']:<36} ║")
+
+    print("╚" + "═" * 55 + "╝")
 
 # ---------------- WEATHER FUNCTION ---------------- #
 
@@ -83,14 +91,14 @@ def get_weather(city):
 
         data = response.json()
 
-        temp = data["main"]["temp"]
-        feels_like = data["main"]["feels_like"]
-        humidity = data["main"]["humidity"]
-        wind_speed = data["wind"]["speed"]
-        description = data["weather"][0]["description"]
+        temp = data.get("main", {}).get("temp")
+        feels_like = data.get("main", {}).get("feels_like")
+        humidity = data.get("main", {}).get("humidity")
+        wind_speed = round((data.get("wind", {}).get("speed")) * 3.6, 1)
+        condition = data.get("weather", [{}])[0].get("description")
 
-        lat = data["coord"]["lat"]
-        lon = data["coord"]["lon"]
+        lat = data.get("coord", {}).get("lat")
+        lon = data.get("coord", {}).get("lon")
 
         # AQI API
         aqi_url = (f"https://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API_KEY}")
@@ -99,7 +107,7 @@ def get_weather(city):
 
         aqi_data = aqi_response.json()
 
-        aqi = aqi_data["list"][0]["main"]["aqi"]
+        aqi = aqi_data.get("list", [{}])[0].get("main", {}).get("aqi")
 
         print("\n" + "╔" + "═" * 73 + "╗")
         print(f"║{'WEATHER DASHBOARD':^73}║")
@@ -107,13 +115,10 @@ def get_weather(city):
 
         print(f"║ {'City':<15} : {city.title():<53} ║")
         print(f"║ {'Temperature':<15} : {str(temp) + '°C':<53} ║")
-        print(f"║ {'Feels Like':<15} : {str(feels_like) + '°C':<53} ║")
+        print(f"║ {'Feels_like':<15} : {str(feels_like) + '°C':<53} ║")
         print(f"║ {'Humidity':<15} : {str(humidity) + '%':<53} ║")
-        print(f"║ {'Wind Speed':<15} : {str(wind_speed) + ' m/s':<53} ║")
-        print(f"║ {'Condition':<15} : {description:<53} ║")
-
-        print("╠" + "═" * 73 + "╣")
-
+        print(f"║ {'Wind Speed':<15} : {str(wind_speed) + ' km/hr':<53} ║")
+        print(f"║ {'Condition':<15} : {condition:<53} ║")
         print(f"║ {'AQI':<15} : {str(aqi):<53} ║")
         print(f"║ {'AQI Status':<15} : {aqi_meaning.get(aqi):<53} ║")
         print(f"║ {'Advisory':<15} : {aqi_advisory.get(aqi):<53} ║")
@@ -122,8 +127,11 @@ def get_weather(city):
         
         # Saving history 
         weather_data = {
-            "temp" : temp,
-            "condition" : description
+            "temperature" : temp,
+            "humidity" : humidity,
+            "wind_speed" : wind_speed,
+            "aqi" : aqi,
+            "condition" : condition
             }
         
         save_history(city, weather_data)
@@ -142,18 +150,43 @@ def get_weather(city):
 # ---------------- MAIN PROGRAM ---------------- #
 
 def main():
+    while True:
+        print("=======================Weather Dashboard======================")
+        print("1. Check Weather.")
+        print("2. See History")
+        print("3. Exit")
 
-    history=load_history()
+        try:
+            ch = int(input("Enter Choice: "))
 
-    if history:
-        print(f"Last searched city : {history[-1]['city']}\n")
+        except ValueError:
+            print("\nPlease enter a valid number!")
+            continue
+            
 
-    city = input("Enter city name (or history):")
+        history=load_history()
 
-    if city.lower()=="history":
-        show_history()
-    else:
-        get_weather(city)
+        '''if not history:
+            print("\nNo previous search history found.\n")'''
+            
+        if (ch==1):
+            if history:
+                print(f"Last searched city : {history[-1]['city']}\n")
+            else:
+                print("\nNo previous search history found.\n")
+            city = input("Enter city name: ")
+            if not city.strip():
+                print("\nCity name cannot be empty!")
+                continue
+            get_weather(city)
+        elif (ch==2):
+            show_history()
+        elif (ch==3):
+            print("\nThank you for using Weather Dashboard!")
+            return
+        else:
+            print("Invalid Choice!")
+
 
 if __name__=="__main__":
     main()
