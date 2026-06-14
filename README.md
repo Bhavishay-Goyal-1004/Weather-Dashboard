@@ -12,7 +12,6 @@ A Python command-line application that fetches real-time weather and air quality
 * Display:
 
   * Temperature
-  * Feels Like Temperature
   * Humidity
   * Wind Speed
   * Weather Condition
@@ -95,65 +94,69 @@ python main.py
 ---
 
 # Example Usage
+```bash
+=======================Weather Dashboard======================
+1. Check Weather.
+2. See History
+3. Exit
+Enter Choice:
+```
+
 
 ## Weather Search
 
 ```bash
-Enter city name (or type 'history'): Pune
+Enter city name: Pune
 ```
 
 ## Example Output
 
 ```bash
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                              WEATHER DASHBOARD                               ║
-╠══════════════════════════════════════════════════════════════════════════════╣
-║ City                 : Pune                                                  ║
-║ Temperature          : 35.78°C                                               ║
-║ Feels Like           : 36.32°C                                               ║
-║ Humidity             : 32%                                                   ║
-║ Wind Speed           : 7.39 m/s                                              ║
-║ Condition            : scattered clouds                                      ║
-╠══════════════════════════════════════════════════════════════════════════════╣
-║ AQI                  : 1                                                     ║
-║ AQI Status           : Good                                                  ║
-║ Advisory             : Air quality is satisfactory.                          ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+╔═════════════════════════════════════════════════════════════════════════╗
+║                            WEATHER DASHBOARD                            ║
+╠═════════════════════════════════════════════════════════════════════════╣
+║ City            : Pune                                                  ║
+║ Temperature     : 28.54°C                                               ║
+║ Feels_like      : 28.58°C                                               ║
+║ Humidity        : 45%                                                   ║
+║ Wind Speed      : 1.6 km/hr                                             ║
+║ Condition       : clear sky                                             ║
+║ AQI             : 1                                                     ║
+║ AQI Status      : Good                                                  ║
+║ Advisory        : Air quality is satisfactory.                          ║
+╚═════════════════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
 # Search History
 
-Type:
-
-```bash
-history
-```
-
 to view previously searched cities.
 ```bash
-===== SEARCH HISTORY =====
-
-City: Mumbai
-Temperature: 304.51°C
-Condition: few clouds
-
-City: Dhanbad
-Temperature: 312.04°C
-Condition: scattered clouds
-
-City: Delhi
-Temperature: 310.56°C
-Condition: broken clouds
-
-City: Chennai
-Temperature: 35.56°C
-Condition: overcast clouds
-
-City: Pune
-Temperature: 35.78°C
-Condition: scattered clouds
+╔═══════════════════════════════════════════════════════╗
+║                    SEARCH HISTORY                     ║
+╠═══════════════════════════════════════════════════════╣
+║ City           : Ranchi                               ║
+║ Temperature    : 31.16°C                              ║
+║ Humidity       : 41%                                  ║
+║ Wind Speed     : 10.3 km/h                            ║
+║ AQI            : 4                                    ║
+║ Condition      : scattered clouds                     ║
+╠═══════════════════════════════════════════════════════╣
+║ City           : Delhi                                ║
+║ Temperature    : 39.36°C                              ║
+║ Humidity       : 21%                                  ║
+║ Wind Speed     : 13.9 km/h                            ║
+║ AQI            : 3                                    ║
+║ Condition      : clear sky                            ║
+╠═══════════════════════════════════════════════════════╣
+║ City           : Pune                                 ║
+║ Temperature    : 28.54°C                              ║
+║ Humidity       : 45%                                  ║
+║ Wind Speed     : 1.6 km/h                             ║
+║ AQI            : 1                                    ║
+║ Condition      : clear sky                            ║
+╚═══════════════════════════════════════════════════════╝
 ```
 ---
 
@@ -189,19 +192,6 @@ This project helped practice:
 
 OpenWeatherMap API:
 https://openweathermap.org/api
-
----
-
-# Submission Requirements Covered
-
-* Weather Data
-* AQI Data
-* Search History
-* Error Handling
-* `.env` Security
-* `.env.example`
-* GitHub Repository
-* README Documentation
 
 ---
 
